@@ -18,5 +18,6 @@ class User extends Authenticatable
         'name',
         'username',
         'password',
+        'role', // Add the 'role' field here
     ];
 }

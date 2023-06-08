@@ -22,13 +22,17 @@ class UserController extends Controller
             'username' => 'required|unique:tb_user',
             'password' => 'required',
             'password_confirm' => 'required|same:password',
+            'role' => 'required|in:0,1', // Add the role field with validation rules
         ]);
+        
 
         $user = new User([
             'name' => $request->name,
             'username' => $request->username,
             'password' => Hash::make($request->password),
+            'role' => $request->role, // Store the role value
         ]);
+        
         $user->save();
 
         return redirect()->route('login')->with('success', 'Registration success. Please login!');

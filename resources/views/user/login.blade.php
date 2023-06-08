@@ -1,7 +1,7 @@
 @extends('app')
 @section('content')
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-6 mx-auto">
         @if(session('success'))
         <p class="alert alert-success">{{ session('success') }}</p>
         @endif
