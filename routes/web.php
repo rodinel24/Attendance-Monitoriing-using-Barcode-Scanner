@@ -41,7 +41,7 @@ Route::get('/student/create', [StudentController::class, 'create'])->name('stude
 Route::post( '/student', [StudentController::class, 'store'])->name('student.store');
 
 
-Route::get( '/student/{id}',  [StudentController::class, 'update'])->name('student.update');
+Route::put( '/student/{id}',  [StudentController::class, 'update'])->name('student.update');
 
 
 
@@ -56,6 +56,8 @@ Route::get('/student/export', [StudentController::class, 'export'])->name('stude
 Route::get('/scan', [BarcodeController::class, 'index'])->name('scan.form');
 Route::post('/scan', [BarcodeController::class, 'scan'])->name('scan.scan');
 Route::get('/scans', [BarcodeController::class, 'showScans'])->name('scan.results');
+
+
 
 
 

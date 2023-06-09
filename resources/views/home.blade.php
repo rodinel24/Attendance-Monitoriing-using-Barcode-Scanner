@@ -6,14 +6,19 @@
 
 @if(Auth::user()->role == 0)
     <a class="btn btn-primary" href="{{route ('student.index')}}">Student List</a>
-    <a class="btn btn-primary" href="{{route ('scan.form')}}">Student Scan</a>
 @endif
+<a class="btn btn-primary" href="{{route ('scan.form')}}">Student Scan</a>
+
 </b></p>
 <a class="btn btn-primary" href="{{ route('password') }}">Change Password</a>
 <a class="btn btn-danger" href="{{ route('logout') }}">Logout</a>
 @endauth
 @guest
 <a class="btn btn-primary" href="{{ route('login') }}">Login</a>
-<a class="btn btn-info" href="{{ route('register') }}">Register</a>
+
+    <a class="btn btn-info" href="{{ route('register') }}">Register</a>
+
+
+
 @endguest
 @endsection

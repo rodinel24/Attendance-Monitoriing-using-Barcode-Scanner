@@ -45,7 +45,11 @@
                 <label for="address" class="form-label">Address:</label>
                 <input type="text" id="address" name="address" class="form-control" value="{{ $student->address }}" required>
             </div>
-
+            
+            <div class="mb-3">
+                <label for="student_image" class="form-label">Student Image:</label>
+                <input type="file" id="student_image" name="student_image" class="form-control" accept="image/*">
+            </div>
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
     </div>

@@ -81,7 +81,7 @@ class StudentController extends Controller
             'address' => 'required',
             'student_image' => 'image|mimes:jpeg,png,jpg,gif',
         ]);
-
+    
         $student = Student::findOrFail($id);
         $student->first_name = $request->input('first_name');
         $student->last_name = $request->input('last_name');
@@ -90,25 +90,27 @@ class StudentController extends Controller
         $student->section = $request->input('section');
         $student->year_level = $request->input('year_level');
         $student->address = $request->input('address');
-
+    
         if ($request->hasFile('student_image')) {
             $image = $request->file('student_image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images'), $imageName);
             $student->student_image = $imageName;
         }
-
+    
         $student->save();
-
-        return redirect()->route('student.update')->with('success', 'Student record updated successfully.');
+    
+        return redirect()->route('student.edit', $id)->with('success', 'Student record updated successfully.');
     }
+    
 
-    public function edit($id)
-    {
-        $student = Student::findOrFail($id);
-
-        return view('student.edit', compact('student'));
-    }
+    // public function edit($id)
+    // {
+    //     $student = Student::findOrFail($id);
+    
+    //     return view('student.edit', compact('student'));
+    // }
+    
 
     public function destroy($id)
     {

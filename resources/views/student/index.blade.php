@@ -91,11 +91,25 @@
             max-width: 100px;
             max-height: 100px;
         }
+           .btn_home {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: red;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            }
+
+            .btn_home:hover {
+            background-color: orange;
+            }
     </style>
 </head>
 <body>
     @if(Auth::user()->role == 0)
     <h2>Student Information</h2>
+    <a class="btn_home" href="{{url ('/')}}">Back To Home</a>
+
     <a href="{{ route('student.create') }}" class="create-button">Create</a>
 
     <form action="{{ route('student.index') }}" method="GET" class="search-form">
@@ -110,6 +124,7 @@
     <table id="student">
         <thead>
             <tr>
+                 <th>Image</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Middle Name</th>
@@ -119,12 +134,14 @@
                 <th>Address</th>
                 <th>Actions</th>
                 <th>Barcode</th>
-                <th>Image</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($students as $student)
             <tr>
+                 <td>
+                     <img src="{{ asset('images/' . $student->student_image) }}" alt="Student Image" style="width: 100px; height: 100px;">
+                </td>
                 <td>{{ ucwords(strtolower($student->first_name)) }}</td>
                 <td>{{ ucwords(strtolower($student->last_name)) }}</td>
                 <td>{{ ucwords(strtolower($student->middle_name)) }}</td>
@@ -147,9 +164,7 @@
                         {!! $barcodeGenerator->getBarcode($student->id_number, $barcodeGenerator::TYPE_CODE_128) !!}
                     </div>
                 </td>
-                <td>
-                     <img src="{{ asset('images/' . $student->student_image) }}" alt="Student Image" style="width: 100px; height: 100px;">
-                </td>
+               
 
             </tr>
             @endforeach
