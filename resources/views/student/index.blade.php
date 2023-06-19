@@ -171,8 +171,7 @@
         </tbody>
     </table>
 
-    <hr>
-    <h2>Accumulated Data from Main Entrance</h2>
+    
     <div class="scan-results">
     </div>
 

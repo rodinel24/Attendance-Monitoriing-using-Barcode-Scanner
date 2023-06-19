@@ -100,7 +100,7 @@ class StudentController extends Controller
     
         $student->save();
     
-        return redirect()->route('student.edit', $id)->with('success', 'Student record updated successfully.');
+        return redirect()->route('student.update', $id)->with('success', 'Student record updated successfully.');
     }
     
 

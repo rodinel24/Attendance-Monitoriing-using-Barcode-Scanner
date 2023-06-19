@@ -139,6 +139,22 @@
 
 
     </style>
+
+<script>
+  var counter = 0; // Initializing the counter
+
+  function updateTime() {
+    var timeElement = document.getElementById("time");
+
+    counter++; // Incrementing the counter
+
+    if (counter % 2 === 1) {
+      timeElement.innerHTML = "Time in";
+    } else {
+      timeElement.innerHTML = "Time out";
+    }
+  }
+</script>
 </head>
 <body>
 <a class="btn_home" href="{{url ('/')}}">Back To Home</a>
@@ -153,8 +169,9 @@
 
         @if(Auth::user()->role==1)
         
-        @foreach ($scans->reverse() as $scan)
+        @foreach ($scans->reverse() as $index => $scan)
     @if ($loop->first)
+        <!-- Student image and information container -->
         <div class="container">
             <div class="image-container">
                 <img src="{{ asset('images/' . $scan['studentImage']) }}" alt="Student Image">
@@ -184,18 +201,18 @@
                     <tr>
                         <th>Date:</th>
                         <td>{{ $scan['date'] }}</td>
-
                     </tr>
                     <tr>
-                        <th>Time:</th>
-                    <td>{{ $scan['time'] }}</td>
-                    </tr>
+                        <th>{{ $index % 2 === 0 ? 'Time out' : 'Time in' }}</th>
+                        <td>{{ $scan['time'] }}</td>
 
+                    </tr>
                 </table>
             </div>
         </div>
     @endif
 @endforeach
+
 @endif
 
 
@@ -238,10 +255,14 @@
 
     <div class="scan-results">
 @if(Auth::user()->role == 0)
-<button onclick="printScanResults()">Print Scan Results</button>
 
     @include('scan-result', ['scans' => $scans])
     @endif
+
+   
+
+
+    
 
     </div>
 
@@ -272,23 +293,7 @@
       setInterval(updateTime, 1000);
     });
        
-    function printScanResults() {
-        // Open a new window for printing
-        var printWindow = window.open('', '_blank');
-
-        // Build the HTML content to be printed
-        var content = document.getElementById('scan-results').innerHTML;
-
-        // Set the content of the new window
-        printWindow.document.open();
-        printWindow.document.write('<html><head><title>Print Scan Results</title></head><body>');
-        printWindow.document.write(content);
-        printWindow.document.write('</body></html>');
-        printWindow.document.close();
-
-        // Print the new window
-        printWindow.print();
-    }
+   
 </script>
 </body>
 </html>
