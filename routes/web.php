@@ -56,6 +56,8 @@ Route::get('/student/export', [StudentController::class, 'export'])->name('stude
 Route::get('/scan', [BarcodeController::class, 'index'])->name('scan.form');
 Route::post('/scan', [BarcodeController::class, 'scan'])->name('scan.scan');
 Route::get('/scans', [BarcodeController::class, 'showScans'])->name('scan.results');
+Route::get('/scans-today', [BarcodeController::class, 'todaysResult'])->name('scans.today');
+
 
 
 

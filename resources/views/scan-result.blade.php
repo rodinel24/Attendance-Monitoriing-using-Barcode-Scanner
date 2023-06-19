@@ -5,6 +5,8 @@
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/jsbarcode.min.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
 
     <style>
           /* Button styles */
@@ -57,6 +59,8 @@
     <button onclick="printScanResults()">Print Scan Results</button>
 
     <button id="export-btn" onclick="exportTableToExcel()">Export to Excel</button>
+    <button id="pdf-btn" onclick="exportTableToPDF()">Export to PDF</button>
+
 
         <thead>
             <tr>
@@ -79,7 +83,7 @@
                     </td>
                     <td>{{ $scan['barcode'] }}</td>
                     <td>{{ $scan['date'] }}</td>
-                    <td> {{ $index % 2 === 0 ? 'Time out' : 'Time in' }} {{ $scan['time'] }}</td>
+                    <td> {{ $index % 2 === 0 ? 'OUT' : 'IN' }}: {{ $scan['time'] }}</td>
                     <td>{{ strtoupper($scan['firstName']) }}</td>
                     <td>{{ strtoupper($scan['lastName']) }}</td>
                     <td>{{ strtoupper($scan['section']) }}</td>
@@ -126,6 +130,30 @@
 
        
     });
+     function exportTableToPDF() {
+        // Create a new PDF document
+        var doc = new jspdf.jsPDF();
+
+        // Get the table element
+        var table = document.getElementById("scan-results");
+
+        // Get the table HTML content
+        var tableHTML = table.outerHTML;
+
+        // Convert the table HTML to canvas
+        html2canvas(table).then(function (canvas) {
+            // Get the canvas image data
+            var imgData = canvas.toDataURL("image/jpeg", 1.0);
+
+            // Add the image to the PDF document
+            doc.addImage(imgData, "JPEG", 10, 10, 190, 0);
+
+            // Save the PDF document
+            doc.save("scan_results.pdf");
+        });
+    }
+
+
     function exportTableToExcel() {
             // Get HTML table data
             var table = document.getElementById("scan-results");

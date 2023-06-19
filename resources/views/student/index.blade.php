@@ -103,6 +103,16 @@
             .btn_home:hover {
             background-color: orange;
             }
+             /* Search input styles */
+        #search-input {
+            padding: 8px;
+            border-radius: 4px;
+            float: right;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            background-color: #f8f8f8;
+            transition: box-shadow 0.3s ease;
+        }
     </style>
 </head>
 <body>
@@ -112,12 +122,8 @@
 
     <a href="{{ route('student.create') }}" class="create-button">Create</a>
 
-    <form action="{{ route('student.index') }}" method="GET" class="search-form">
-        <div class="search-container">
-            <input type="text" name="search" placeholder="Search by ID number" class="search-input">
-            <button type="submit" class="search-button">Search</button>
-        </div>
-    </form>
+    <input type="text" id="search-input" placeholder="Search">
+
 
     <button id="export-btn" onclick="exportTableToExcel()">Export to Excel</button>
 
@@ -176,6 +182,15 @@
     </div>
 
     <script>
+         $(document).ready(function() {
+    // Search functionality
+    $('#search-input').on('keyup', function() {
+        var value = $(this).val().toLowerCase();
+        $('#student tbody tr').filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+    });
+});
         function exportTableToExcel() {
             // Get HTML table data
             var table = document.getElementById("student");

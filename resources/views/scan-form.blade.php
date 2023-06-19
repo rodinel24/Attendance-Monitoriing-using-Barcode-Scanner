@@ -135,6 +135,16 @@
       font-weight: bold;
       text-align: center;
     }
+
+    .form-inline {
+        display: flex;
+        align-items: center;
+    }
+    
+    .form-inline input[type="text"],
+    .form-inline button {
+        margin-right: 10px;
+    }
     
 
 
@@ -167,6 +177,19 @@
     <div class="scan-form">
         <h2>Mindanao State University - Maigo School of Arts and Trades</h2>
 
+        
+<form method="POST" action="/scan" class="form-inline">
+    @csrf
+    <input type="text" name="barcode" id="barcodeInput" placeholder="Scan barcode" autofocus>
+    <button type="submit">Submit</button>
+</form>
+
+@if ($errors->any())
+            <div class="error-message">{{ $errors->first('barcode') }}</div>
+        @elseif (session('scan_success'))
+            <div class="success-message">{{ session('scan_success') }}</div>
+        @endif
+       
         @if(Auth::user()->role==1)
         
         @foreach ($scans->reverse() as $index => $scan)
@@ -221,36 +244,10 @@
 
 
 
-        <form method="POST" action="/scan">
-            @csrf
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Barcode</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <input type="text" name="barcode" id="barcodeInput" placeholder="Scan barcode" autofocus>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <button type="submit">Submit</button>
-
-        </form>
-       
 
 
 
-        @if ($errors->any())
-            <div class="error-message">{{ $errors->first('barcode') }}</div>
-        @elseif (session('scan_success'))
-            <div class="success-message">{{ session('scan_success') }}</div>
-        @endif
+     
     </div>
 
     <div class="scan-results">
@@ -259,7 +256,10 @@
     @include('scan-result', ['scans' => $scans])
     @endif
 
-   
+    @if(Auth::user()->role == 1)
+
+@include('result-today', ['scans' => $scans])
+@endif
 
 
     
